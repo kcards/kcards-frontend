@@ -7,7 +7,7 @@ class RoomPrompt extends Component {
         this.state = {
             roomCode: "",
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.createRoom = this.createRoom.bind(this);
     }
 
@@ -29,7 +29,7 @@ class RoomPrompt extends Component {
         });
     }
 
-    handleChange(event) {
+    handleInputChange(event) {
         this.setState({roomCode: event.target.value});
     }
 
@@ -45,7 +45,7 @@ class RoomPrompt extends Component {
                         <div className="form-group">
                             <input type="text" className="form-control" name="name" placeholder="room-code"
                                    value={this.state.roomCode}
-                                   onChange={this.handleChange}></input>
+                                   onChange={this.handleInputChange}/>
                         </div>
                         <div className="form-inline">
                             <button type="submit" className="form-control" name="goto">Go to Room</button>
