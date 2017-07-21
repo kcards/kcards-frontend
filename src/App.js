@@ -51,6 +51,15 @@ class App extends Component {
         }
     }
 
+    lobbyButton() {
+        return(<button onClick={() => this.setActiveRoom(null)}>Return to Lobby</button>)
+    }
+
+    forgetButton(){
+        return(<button onClick={() => this.setName(null)}>Forget me!</button>)
+    }
+
+
 
     render() {
         return (
@@ -59,6 +68,9 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
                     <h2>Welcome to K-Cards!</h2>
                 </div>
+
+                {this.lobbyButton()}
+                {this.forgetButton()}
                 {App.getStatusMessage(this.state.activeRoom)}
                 {App.getNameMessage(this.state.name)}
                 {this.getPanel()}
