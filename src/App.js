@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import logo from "./logo.svg";
+import logo from "./k_card.png";
 import "./App.css";
 import RoomPrompt from "./RoomPrompt";
 import NamePrompt from "./NamePrompt";

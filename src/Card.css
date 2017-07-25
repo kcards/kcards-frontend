@@ -1,0 +1,19 @@
+.card.big-card {
+    font-size: 200%
+}
+
+.card {
+    color: white;
+}
+
+.green {
+    background-color: darkgreen;
+}
+
+.red {
+    background-color: darkred;
+}
+
+.yellow {
+    background-color: goldenrod;
+}
