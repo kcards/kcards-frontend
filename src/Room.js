@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import "./Room.css";
 import Card from "./Card";
+import Options from "./Options";
 
 class Room extends Component {
     constructor() {
         super();
         this.state = {
+            showOptions: false,
             queue: [],
         };
         this.startPolling = this.startPolling.bind(this)
@@ -24,7 +26,7 @@ class Room extends Component {
 
     startPolling() {
         console.log("Polling Started");
-        this._timer = setInterval(this.getCurrentQueue.bind(this), 2000);
+        this._timer = setInterval(this.getCurrentQueue.bind(this), 500);
     }
 
 
@@ -65,7 +67,7 @@ class Room extends Component {
         });
     }
 
-    removeCard(name) {
+    nextSpeaker(name) {
         fetch("/api/rooms/" + this.props.roomCode + "/next", {
             method: 'POST',
             headers: {
@@ -84,46 +86,56 @@ class Room extends Component {
         });
     }
 
+
     render() {
-        let cards = this.state.queue.map((card, index) => {
+        if (this.state.showOptions) {
+            return (<Options roomCode={this.props.roomCode} name={this.props.name} closeOptions={() => this.setState({showOptions:false})}/>)
+        } else {
+            let cards = this.state.queue.map((card, index) => {
+                return (
+                    <li key={index}>
+                        <Card name={card.name} color={card.color} big={index === 0}/>
+                    </li>
+                )
+            });
+
             return (
-                <li key={index}>
-                    <Card name={card.name} color={card.color} big={index === 0}/>
-                </li>
-            )
-        });
-        return (
-            <div className="container">
-                <h1>{this.props.roomCode}</h1>
-                <ul>{cards}</ul>
-                <div className="row">
-                    <div className="col-md-8">
-                        <div className="form-inline">
-                            <button type="submit" className="form-control" name="new-topic"
-                                    onClick={() => this.addCard(this.props.name, "green")}>New Topic
-                            </button>
-                            <button type="submit" className="form-control" name="followup"
-                                    onClick={() => this.addCard(this.props.name, "yellow")}>Followup
-                            </button>
-                            <button type="submit" className="form-control" name="interrupt"
-                                    onClick={() => this.addCard(this.props.name, "red")}>Interruption
-                            </button>
+                <div className="container">
+                    <h1>{this.props.roomCode}</h1>
+                    <ul>{cards}</ul>
+                    <div className="row">
+                        <div className="col-md-8">
+                            <div className="form-inline">
+                                <button type="submit" className="form-control" name="new-topic"
+                                        onClick={() => this.addCard(this.props.name, "green")}>New Topic
+                                </button>
+                                <button type="submit" className="form-control" name="followup"
+                                        onClick={() => this.addCard(this.props.name, "yellow")}>Followup
+                                </button>
+                                <button type="submit" className="form-control" name="interrupt"
+                                        onClick={() => this.addCard(this.props.name, "red")}>Interruption
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div>
-                            <button type="submit" className="form-control" name="interrupt"
-                                    onClick={() => this.removeCard(this.props.name)}>Next Speaker
-                            </button>
+                        <div className="col-md-4">
+                            <div>
+                                <button type="submit" className="form-control" name="interrupt"
+                                        onClick={() => this.nextSpeaker(this.props.name)}>Next Speaker
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div>
+                                <button type="submit" className="form-control" name="options"
+                                        onClick={() => this.setState({showOptions:true})}>Options
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
-        );
+            );
+        }
     }
-
 }
+
 export default Room;

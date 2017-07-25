@@ -48,7 +48,7 @@ class App extends Component {
         } else if (this.state.name === null) {
             return (<NamePrompt setName={this.setName}/>)
         } else {
-            return (<Room roomCode={this.state.activeRoom} name={this.state.name} />)
+            return (<Room roomCode={this.state.activeRoom} name={this.state.name}/>)
         }
     }
 
