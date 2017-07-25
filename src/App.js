@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import RoomPrompt from "./RoomPrompt";
 import NamePrompt from "./NamePrompt";
+import Room from "./Room";
 
 class App extends Component {
 
@@ -47,7 +48,7 @@ class App extends Component {
         } else if (this.state.name === null) {
             return (<NamePrompt setName={this.setName}/>)
         } else {
-            return (<p>This should be done sometime!</p>)
+            return (<Room roomCode={this.state.activeRoom} name={this.state.name} />)
         }
     }
 
