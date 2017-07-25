@@ -9,6 +9,7 @@ class RoomPrompt extends Component {
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.createRoom = this.createRoom.bind(this);
+        this.goToRoom = this.goToRoom.bind(this);
     }
 
 
@@ -19,6 +20,21 @@ class RoomPrompt extends Component {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({"code": this.state.roomCode})
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log('Request succeeded with JSON response', data.code);
+            this.props.setActiveRoom(data.code);
+        }).catch((error) => {
+            console.log('Request failed', error);
+        });
+    }
+
+    goToRoom() {
+        fetch("/api/rooms/" + this.state.roomCode, {
+            headers: {
+                "Content-type": "application/json"
+            },
         }).then((response) => {
             return response.json();
         }).then((data) => {
@@ -48,7 +64,9 @@ class RoomPrompt extends Component {
                                    onChange={this.handleInputChange}/>
                         </div>
                         <div className="form-inline">
-                            <button type="submit" className="form-control" name="goto">Go to Room</button>
+                            <button type="submit" className="form-control" name="goto"
+                                    onClick={this.goToRoom}>Go to Room
+                            </button>
                             <button type="submit" className="form-control" name="create"
                                     onClick={() => this.createRoom()}>Create Room
                             </button>
